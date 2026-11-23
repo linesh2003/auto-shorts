@@ -1,0 +1,79 @@
+# ============================================================
+#  Auto-Shorts Pipeline — channel configuration
+#  Edit this file, commit, done. Everything else is automatic.
+# ============================================================
+
+schedule:
+  # How many draft clips to produce per run (runs twice a day by default).
+  drafts_per_run: 3
+  # Hard cap on YouTube uploads per day (YouTube free API quota allows max 6).
+  max_uploads_per_day: 4
+
+# ------------------------------------------------------------
+# Where clips come from. Add one block per source.
+#
+#   type: vod_url   -> any Twitch VOD / Kick / YouTube video URL that yt-dlp supports
+#   type: local_path -> a video file you pushed to the repo (e.g. sources/myvod.mp4)
+#
+# IMPORTANT: only clip streams you own or have permission to clip.
+# ------------------------------------------------------------
+sources:
+  - type: vod_url
+    url: "PASTE-YOUR-TWITCH-VOD-OR-VIDEO-URL-HERE"
+    credit: "MyChannel"          # streamer name shown in the video description
+  # - type: local_path
+  #   path: "sources/myvod.mp4"
+  #   credit: "MyChannel"
+
+# Words that mark hype moments (spoken in the stream or spammed in chat).
+keywords:
+  - "insane"
+  - "no way"
+  - "what"
+  - "let's go"
+  - "clutch"
+  - "unreal"
+  - "crazy"
+  - "one hp"
+  - "oh my god"
+
+style:
+  # Output resolution of the vertical Short (9:16).
+  width: 720
+  height: 1280
+  fps: 30
+  # How landscape footage becomes vertical:
+  #   blur_pad -> full frame centered over a blurred background (best for gameplay)
+  #   center   -> center crop (best when the action is always mid-screen)
+  crop_mode: "blur_pad"
+  # Clip length limits (seconds).
+  min_clip_seconds: 15
+  max_clip_seconds: 45
+  # Big top-of-screen hook banner duration (seconds). 0 disables.
+  hook_seconds: 2.6
+  # Caption look. font: any font name installed on GitHub runners ("Arial Black",
+  # "Impact" are available there) or locally ("DejaVu Sans" always safe).
+  font: "DejaVu Sans"
+  font_size: 62
+  # Caption vertical position from the bottom (pixels at 1280 height).
+  caption_margin_bottom: 150
+
+# Whisper model used to transcribe: tiny / base / small / medium.
+# "small" is a good accuracy/speed trade-off on free runners.
+whisper_model: "small"
+
+youtube:
+  privacy: "public"              # public / unlisted / private
+  made_for_kids: false
+  category_id: "20"              # 20 = Gaming (10 = Music, 22 = People & Blogs)
+  title_template: "{hook} #shorts"
+  description_template: >
+    {hook} — clip from {credit}'s stream.
+
+    Subscribe for daily clips!
+    #shorts #gaming #clips
+  tags:
+    - "shorts"
+    - "gaming"
+    - "clips"
+    - "viral"
